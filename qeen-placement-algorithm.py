@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-N = 8
+N = 4
 
 EMPTY_SQUARE = 0
 
@@ -42,10 +42,6 @@ def update_vertical_vision(board_position, row, column):
             board_position[r][column - 1] += ATTACKED_SQUARE
     board_position[row - 1][column - 1] = QUEEN_SQUARE
 
-
-
-
-
 def update_top_left_diagonal(board_position, row, column, squares_until_top, squares_until_left):
     r = row - 1
     c = column - 1
@@ -69,14 +65,62 @@ def update_top_left_diagonal(board_position, row, column, squares_until_top, squ
 def update_top_right_diagonal(board_position, row, column, squares_until_top, squares_until_right):
     r = row - 1
     c = column - 1
+    if squares_until_top == 0 or squares_until_right == 0:
+        pass
+    elif squares_until_top >= squares_until_right:
+        for i in range(1, (squares_until_right + 1)):
+            square = board_position[r - i][c + i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r - i][c + i] += ATTACKED_SQUARE
+    elif squares_until_top < squares_until_right:
+        for i in range(1, row):
+            square = board_position[r - i][c + i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r - i][c + i] += ATTACKED_SQUARE
 
 def update_bottom_left_diagonal(board_position, row, column, squares_until_bottom, squares_until_left):
     r = row - 1
     c = column - 1
+    if squares_until_bottom == 0 or squares_until_left == 0:
+        pass
+    elif squares_until_bottom >= squares_until_left:
+        for i in range(1, column):
+            square = board_position[r + i][c - i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r + i][c - i] += ATTACKED_SQUARE
+    elif squares_until_bottom < squares_until_left:
+        for i in range(1, (squares_until_bottom + 1)):
+            square = board_position[r + i][c - i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r + i][c - i] += ATTACKED_SQUARE
 
 def update_bottom_right_diagonal(board_position, row, column, squares_until_bottom, squares_until_right):
     r = row - 1
     c = column - 1
+    if squares_until_bottom == 0 or squares_until_right == 0:
+        pass
+    elif squares_until_bottom >= squares_until_right:
+        for i in range(1, (squares_until_right + 1)):
+            square = board_position[r + i][c + i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r + i][c + i] += ATTACKED_SQUARE
+    elif squares_until_bottom < squares_until_right:
+        for i in range(1, (squares_until_bottom + 1)):
+            square = board_position[r + i][c + i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r + i][c + i] += ATTACKED_SQUARE
 
 def update_diagonal_vision(board_position, row, column):
     squares_until_top = row - 1
@@ -88,9 +132,6 @@ def update_diagonal_vision(board_position, row, column):
     update_bottom_left_diagonal(board_position, row, column, squares_until_bottom, squares_until_left)
     update_bottom_right_diagonal(board_position, row, column, squares_until_bottom, squares_until_right)
 
-
-
-
 def update_queen_vision(board_position, row, column):
     update_horizontal_vision(board_position, row, column)
     update_vertical_vision(board_position, row, column)
@@ -100,22 +141,11 @@ def add_queen_to_board(board_position, row, column):
     board_position[row - 1][column - 1] = QUEEN_SQUARE
     update_queen_vision(board_position, row, column)
 
-
-
-board_position = generate_empty_board_rows()
-add_queen_to_board(board_position, 5, 6)
-for row in board_position:
-    print(row)
-
-
-
-
 def check_for_attacked_queens(board_position):
     any_attacked_queens = False
     for row in board_position:
         attacked_queen_count = row.count(ATTACKED_QUEEN)
         if attacked_queen_count > 0:
-            # print("\nAttacked queen found.\n")
             any_attacked_queens = True
             break
     return any_attacked_queens
@@ -182,9 +212,9 @@ def find_solution():
 def print_solution():
     solution = find_solution()
     if solution is None:
-        print("\nNo solution.\n")
+        print(f"\nNo solution for a {N}x{N} board.\n")
     else:
         for row in solution:
             print(row)
 
-# print_solution()
+print_solution()
