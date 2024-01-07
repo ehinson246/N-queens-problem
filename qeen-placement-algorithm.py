@@ -47,16 +47,36 @@ def update_vertical_vision(board_position, row, column):
 
 
 def update_top_left_diagonal(board_position, row, column, squares_until_top, squares_until_left):
-    pass
+    r = row - 1
+    c = column - 1
+    if squares_until_top == 0 or squares_until_left == 0:
+        pass
+    elif squares_until_top >= squares_until_left:
+        for i in range(1, column):
+            square = board_position[r - i][c - i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r - i][c - i] += ATTACKED_SQUARE
+    elif squares_until_top < squares_until_left:
+        for i in range(1, row):
+            square = board_position[r - i][c - i]
+            if square & ATTACKED_SQUARE:
+                pass
+            else:
+                board_position[r - i][c - i] += ATTACKED_SQUARE
 
 def update_top_right_diagonal(board_position, row, column, squares_until_top, squares_until_right):
-    pass
+    r = row - 1
+    c = column - 1
 
 def update_bottom_left_diagonal(board_position, row, column, squares_until_bottom, squares_until_left):
-    pass
+    r = row - 1
+    c = column - 1
 
 def update_bottom_right_diagonal(board_position, row, column, squares_until_bottom, squares_until_right):
-    pass
+    r = row - 1
+    c = column - 1
 
 def update_diagonal_vision(board_position, row, column):
     squares_until_top = row - 1
@@ -83,7 +103,7 @@ def add_queen_to_board(board_position, row, column):
 
 
 board_position = generate_empty_board_rows()
-add_queen_to_board(board_position, 4, 4)
+add_queen_to_board(board_position, 5, 6)
 for row in board_position:
     print(row)
 
