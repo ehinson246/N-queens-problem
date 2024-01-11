@@ -120,7 +120,6 @@ def update_bottom_right_diagonal(board_position, row, column, squares_until_bott
             else:
                 board_position[r + i][c + i] += ATTACKED_SQUARE
 
-
 def update_diagonal_vision(board_position, row, column):
     squares_until_top = row - 1
     squares_until_bottom = N - row
@@ -225,6 +224,15 @@ def find_solution():
 
     return solution
 
+def translate_row(row):
+    translated_row = "|"
+    for item in row:
+        if item == ATTACKED_SQUARE:
+            translated_row = translated_row + "\033[4m \033[0m|"
+        if item == QUEEN_SQUARE:
+            translated_row = translated_row + "\033[4mQ\033[0m|"
+    return translated_row
+
 def print_solution():
     solution = find_solution()
     if solution is None:
@@ -232,7 +240,8 @@ def print_solution():
     else:
         print(f"\n{N}x{N} solution:\n")
         for row in solution:
-            print(row)
+            translated_row = translate_row(row)
+            print(translated_row)
         print("\n")
 
 print_solution()
